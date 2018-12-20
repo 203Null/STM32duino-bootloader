@@ -369,12 +369,33 @@
     /* CRISTAL 12MHz */
     #define XTAL12M     1
 
+#elif defined MATRIX
+
+      #define 203PID
+      #define NOLED
+
+      #define BUTTON_BANK GPIOC
+      #define BUTTON_PIN 15
+      #define BUTTON_PRESSED_STATE 1
+
+
+  #elif defined MATRIX_FASTBOOT
+
+      #define 203ID
+      #define NOLED
+      #define FASTBOOT
+
+      #define BUTTON_BANK GPIOC
+      #define BUTTON_PIN 15
+      #define BUTTON_PRESSED_STATE 1
+
+
 
 #else
     #error "No config for this target"
 #endif
 
-// Check if button pulldown should be enabled 
+// Check if button pulldown should be enabled
 // Default to True as this was the default prior to needing to disable it
 // in order to use the boot1 pin on the Blue Pill which has a very week pullup
 #ifndef BUTTON_INPUT_MODE
@@ -391,10 +412,17 @@
 #endif
 
 // defines for USB (DONT CHANGE)
-#define VEND_ID0 0xAF
-#define VEND_ID1 0x1E
+#ifdef 203ID
+#define VEND_ID0 0x02
+#define VEND_ID1 0x03
 #define PROD_ID0 0x03
 #define PROD_ID1 0x00
+#else
+#define VEND_ID0 0x1E
+#define VEND_ID1 0xAF
+#define PROD_ID0 0x03
+#define PROD_ID1 0x00
+#endif
 
 // Value to place in RTC backup register 10 for persistent bootloader mode
 #define RTC_BOOTLOADER_FLAG 0x424C
